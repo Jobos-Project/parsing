@@ -1,6 +1,7 @@
 from django.db import models
 
-class data_jobs(models.Model):
+
+class Job(models.Model):
     # location — место работы
     # contract_type — тип контракта
     # contract_time — тип занятости

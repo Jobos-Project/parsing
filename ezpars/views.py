@@ -1,6 +1,6 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import HttpResponse
 import requests, json
-from ezpars.models import data_jobs
+from ezpars.models import Job
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -8,12 +8,14 @@ from rest_framework import permissions
 
 from ezpars.serializers import JobSerializer
 
+
 def get_adzuna(request):
     # Данные с адзуна
     service = 'adzuna'
-    r = requests.get('https://api.adzuna.com/v1/api/jobs/gb/search/10?app_id=7c781e1b&app_key=14d8134416f7ad529c2432041d4095cc&content-type=application/json')
+    r = requests.get(
+        'https://api.adzuna.com/v1/api/jobs/gb/search/10?app_id=7c781e1b&app_key=14d8134416f7ad529c2432041d4095cc&content-type=application/json')
 
-    data_jobs.objects.all().delete()
+    Job.objects.all().delete()
 
     response = r.json()
     data = json.dumps(response)
@@ -37,10 +39,11 @@ def get_adzuna(request):
         title = z.get("title")
         url = z.get("redirect_url")
 
-        data_jobs.objects.create(description=description, company=company,
-                                 location=location, contract_type=contract_type,
-                                 contract_time=contract_time, title=title,
-                                 service=service, url=url)
+        Job.objects.create(description=description, company=company,
+                           location=location,
+                           contract_type=contract_type,
+                           contract_time=contract_time, title=title,
+                           service=service, url=url)
     return HttpResponse("gg")
 
 
@@ -51,17 +54,35 @@ def get_location_adzuna(location):
     return s[2:]
 
 
+# data from Github
+class GithubJob(APIView):
+    permission_classes = [permissions.AllowAny, ]
+
+    def get(self, request):
+        message = 'Jobs from Github'
+        Job.objects.all().delete()
+
+        for page in range(0, 5):
+            response = requests.get(
+                'https://jobs.github.com/positions.json?' + "page=" +
+                str(page))
+            resp = response.json()
+            for job in resp:
+                new_job = Job()
+                new_job.name = job['title' or None]
+                new_job.location = job['location' or None]
+                new_job.about = job['description' or None]
+                new_job.job_url = job['url' or None]
+                new_job.company = job['company' or None]
+                new_job.save()
+
+        return HttpResponse(message)
+
+
 class JobsView(APIView):
     permission_classes = [permissions.AllowAny, ]
 
     def get(self, request):
-
-        products = data_jobs.objects.all()
+        products = Job.objects.all()
         serializer = JobSerializer(products, many=True)
         return Response(serializer.data)
-
-
-
-
-
-

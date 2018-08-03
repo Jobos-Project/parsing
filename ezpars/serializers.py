@@ -1,11 +1,11 @@
 from rest_framework import serializers
-from ezpars.models import data_jobs
+from ezpars.models import Job
 
 
 class JobSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
-        model = data_jobs
+        model = Job
         fields = ("location", "contract_type", "contract_time", "title",
                   "description", "company", "service", "url")
 

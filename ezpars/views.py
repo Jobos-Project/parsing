@@ -80,6 +80,7 @@ class GithubJob(APIView):
                 new_job.about = job['description' or None]
                 new_job.job_url = job['url' or None]
                 new_job.company = job['company' or None]
+                new_job.service = 'github'
                 new_job.save()
 
         return HttpResponse(message)

@@ -64,8 +64,8 @@ DATABASES = {
         'NAME': db_NAME,
         'USER': db_USER,
         'PASSWORD': db_PASSWORD,
-        'HOST': db_HOST,
-        'PORT': db_PORT,
+        # 'HOST': db_HOST,
+        # 'PORT': db_PORT,
     }
 }
 

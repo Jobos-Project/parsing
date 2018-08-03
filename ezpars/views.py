@@ -25,25 +25,31 @@ def get_adzuna(request):
     for z in y:
 
         description = z.get("description")
-        try:
-            company = z.get("company").get("display_name")
-        except:
-            company = "None"
-
-        if company is None:
-            company = "None"
-
+        company = z.get("company").get("display_name")
         location = get_location_adzuna(z.get("location").get("area"))
         contract_type = z.get("contract_type")
         contract_time = z.get("contract_time")
         title = z.get("title")
         url = z.get("redirect_url")
 
+        if description is None:
+            description = "None"
+        if company is None:
+            company = "None"
+        if contract_type is None:
+            contract_type = "None"
+        if contract_time is None:
+            contract_time = "None"
+        if title is None:
+            title = "None"
+        if url is None:
+            url = "None"
+
         Job.objects.create(description=description, company=company,
-                           location=location,
-                           contract_type=contract_type,
-                           contract_time=contract_time, title=title,
-                           service=service, url=url)
+                                 location=location, contract_type=contract_type,
+                                 contract_time=contract_time, title=title,
+                                 service=service, url=url)
+
     return HttpResponse("gg")
 
 

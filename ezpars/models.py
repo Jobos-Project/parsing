@@ -9,13 +9,14 @@ class data_jobs(models.Model):
     # company — наименование компании
     # service — наименование сайта, откуда вакансия
 
-    location = models.CharField(max_length=500)
-    contract_type = models.CharField(max_length=500)
-    contract_time = models.CharField(max_length=500)
-    title = models.CharField(max_length=500)
-    description = models.CharField(max_length=10000)
-    company = models.CharField(max_length=500)
-    service = models.CharField(max_length=500)
+    location = models.CharField(max_length=500, default='None')
+    contract_type = models.CharField(max_length=500, default='None')
+    contract_time = models.CharField(max_length=500, default='None')
+    title = models.CharField(max_length=500, default='None')
+    description = models.CharField(max_length=10000, default='None')
+    company = models.CharField(max_length=500, default='None')
+    service = models.CharField(max_length=500, default='None')
+    url = models.CharField(max_length=3000, default='None')
 
     class Meta:
         db_table = "parsing_data"

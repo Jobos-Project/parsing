@@ -13,7 +13,7 @@ def get_adzuna(request):
     service = 'adzuna'
     r = requests.get('https://api.adzuna.com/v1/api/jobs/gb/search/10?app_id=7c781e1b&app_key=14d8134416f7ad529c2432041d4095cc&content-type=application/json')
 
-    # data_jobs.objects.all().delete()
+    data_jobs.objects.all().delete()
 
     response = r.json()
     data = json.dumps(response)

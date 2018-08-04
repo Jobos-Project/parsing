@@ -7,6 +7,6 @@ class JobSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Job
         fields = ("location", "contract_type", "contract_time", "title",
-                  "description", "company", "service", "url")
+                  "description", "company", "service", "url", "salary")
 
 

@@ -18,6 +18,7 @@ class Job(models.Model):
     company = models.CharField(max_length=500, default='None')
     service = models.CharField(max_length=500, default='None')
     url = models.CharField(max_length=3000, default='None')
+    salary = models.CharField(max_length=500, default='None')
 
     class Meta:
         db_table = "parsing_data"

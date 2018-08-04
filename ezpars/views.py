@@ -15,7 +15,7 @@ def get_adzuna(request):
     r = requests.get(
         'https://api.adzuna.com/v1/api/jobs/gb/search/10?app_id=7c781e1b&app_key=14d8134416f7ad529c2432041d4095cc&content-type=application/json')
 
-    Job.objects.all().delete()
+    Job.objects.filter(service=service).delete()
 
     response = r.json()
     data = json.dumps(response)
@@ -31,6 +31,7 @@ def get_adzuna(request):
         contract_time = z.get("contract_time")
         title = z.get("title")
         url = z.get("redirect_url")
+	salary = z.get("salary_min")
 
         if description is None:
             description = "None"
@@ -44,11 +45,13 @@ def get_adzuna(request):
             title = "None"
         if url is None:
             url = "None"
+        if salary is None:
+            salary = "None"
 
         Job.objects.create(description=description, company=company,
                                  location=location, contract_type=contract_type,
                                  contract_time=contract_time, title=title,
-                                 service=service, url=url)
+                                 service=service, url=url, salary=salary)
 
     return HttpResponse("gg")
 

@@ -31,7 +31,7 @@ def get_adzuna(request):
         contract_time = z.get("contract_time")
         title = z.get("title")
         url = z.get("redirect_url")
-	salary = z.get("salary_min")
+        salary = z.get("salary_min")
 
         if description is None:
             description = "None"
@@ -69,7 +69,8 @@ class GithubJob(APIView):
 
     def get(self, request):
         message = 'Jobs from Github'
-        Job.objects.all().delete()
+        service = 'github'
+        Job.objects.filter(service=service).delete()
 
         for page in range(0, 5):
             response = requests.get(

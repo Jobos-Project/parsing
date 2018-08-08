@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'djoser',
     'ezpars',
     'corsheaders',
+    'background_task',
 ]
 
 MIDDLEWARE = [

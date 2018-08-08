@@ -49,9 +49,9 @@ def get_adzuna(request):
             salary = "None"
 
         Job.objects.create(description=description, company=company,
-                                 location=location, contract_type=contract_type,
-                                 contract_time=contract_time, title=title,
-                                 service=service, url=url, salary=salary)
+                           location=location, contract_type=contract_type,
+                           contract_time=contract_time, title=title,
+                           service=service, url=url, salary=salary)
 
     return HttpResponse("gg")
 
@@ -69,8 +69,8 @@ class GithubJob(APIView):
 
     def get(self, request):
         message = 'Jobs from Github'
-        service = 'github'
-        Job.objects.filter(service=service).delete()
+        for job in Job.objects.filter(service='github'):
+            job.delete()
 
         for page in range(0, 5):
             response = requests.get(
